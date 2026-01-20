@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include "commands.h"
 
 
 #define MAX_SIZE 1024
@@ -24,8 +25,7 @@ int main() {
 			}
 			else
 			{
-				// check if proper command
-				// check which command. run the command and output
+				
 			}
 			
 		}

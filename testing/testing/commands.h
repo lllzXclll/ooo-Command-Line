@@ -3,9 +3,9 @@
 #include <string.h>
 
 
-const char help_msg[] = "You asked for HELP!\n\
+static const char help_msg[] = "You asked for HELP!\n\
 help - this message\n\
-copy [src] [dst] - copies src content into dst. if dst dosnet exists creates it\n\
+copy [src] [dst] - copies src content into dst. if dst doesn't exists creates it\n\
 count [file] - line, word, char count\n\
 search [file] [content] - returns lines with 'content' in them\n\
 cf [file] [content] - creates file with 'content'\n\
@@ -31,8 +31,22 @@ typedef struct {
 	const char* name;
 	Command_Id id;
 	Command_Func func;
-
 } Command;
+
+
+
+int cmd_help(int argc, char** argv);
+int cmd_copy(int argc, char** argv);
+int cmd_count(int argc, char** argv);
+int cmd_search(int argc, char** argv);
+int cmd_cf(int argc, char** argv);
+int cmd_cdir(int argc, char** argv);
+int cmd_rf(int argc, char** argv);
+int cmd_rdir(int argc, char** argv);
+
+const Command_Id get_command_id(const char* str);
+
+
 
 static const Command commands[] = {// all existing commands
 	{"help", HELP_CMD, cmd_help},
@@ -44,14 +58,3 @@ static const Command commands[] = {// all existing commands
 	{"rf", RF_CMD, cmd_rf},
 	{"rdir", RDIR_CMD, cmd_rdir}
 };
-
-const int cmd_help(int argc, char** argv);
-const int cmd_copy(int argc, char** argv);
-const int cmd_count(int argc, char** argv);
-const int cmd_search(int argc, char** argv);
-const int cmd_cf(int argc, char** argv);
-const int cmd_cdir(int argc, char** argv);
-const int cmd_rf(int argc, char** argv);
-const int cmd_rdir(int argc, char** argv);
-
-const Command_Id command_id(const char* str);
