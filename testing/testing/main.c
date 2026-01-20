@@ -23,11 +23,10 @@ int main() {
 				printf("I hople I proven my worth :) bye...");
 				return 0;
 			}
-			else
-			{
-				
-			}
-			
+			/* just to prove it works
+			int cmd_id = get_command_id(cmd);
+			commands[cmd_id].func(0, NULL);
+			*/
 		}
 	}
 	return 0;

@@ -14,7 +14,6 @@ rf [file] - removes file\n\
 rdir [directory] - removes directory. asks to confirm if found content inside\n";
 
 typedef enum {
-	UNKNOWN_CMD,
 	HELP_CMD,
 	COPY_CMD,
 	COUNT_CMD,
@@ -22,7 +21,8 @@ typedef enum {
 	CF_CMD,
 	CDIR_CMD,
 	RF_CMD,
-	RDIR_CMD
+	RDIR_CMD,
+	UNKNOWN_CMD
 } Command_Id;
 
 typedef int (*Command_Func)(int argc, char** argv); // pointer to functions "int name(int argc, char** argv)"
