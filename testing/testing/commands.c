@@ -90,7 +90,44 @@ int cmd_search(int argc, char** argv)
 
 int cmd_cf(int argc, char** argv)
 {
-    return 0;
+    if (argc < 2) {
+        printf("Wrong usage of CF command! try again :)\n");
+        return 0;
+    }
+    const char* file_name = argv[1];
+    // check if file already exists
+    FILE* f = fopen(file_name, "r");
+    if (f != NULL) {
+        printf("File '%s' already exists. We don't like doubles around here '_'\nUse 'help' command for any help!\n", file_name);
+        fclose(f);
+        return 0;
+    }
+
+
+
+    FILE* file_created = fopen(file_name, "w");
+    if (file_created == NULL) {
+        printf("Couldn't create file '%s'. Use 'help' command for any help!\n", file_name);
+        return 0;
+    }
+
+    if (argv[2] != NULL) { // there is also content to add to the file
+        Buffer bfr;
+        for (size_t i = 2; i < argc; i++)
+        {
+            fprintf(file_created, "%s", argv[i]);
+            if (i + 1 != argc)
+                fprintf(file_created, " "); // add space if its not the last word
+        }
+        fprintf(file_created, "\n"); // add new line at the end for cleaner look and usage for later
+        printf("File '%s' created successfuly!\nI also place the content inside it as you requested\n", file_name);
+    }
+    else {
+        printf("File '%s' created successfuly!\nGo put some stuff into it. Its lonely :)\n", file_name);
+    }
+    fclose(file_created);
+
+    return 1;
 }
 
 int cmd_cdir(int argc, char** argv)
