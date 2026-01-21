@@ -1,17 +1,8 @@
 #pragma once
 #include <stdio.h>
 #include <string.h>
-
-
-static const char help_msg[] = "You asked for HELP!\n\
-help - this message\n\
-copy [src] [dst] - copies src content into dst. if dst doesn't exists creates it\n\
-count [file] - line, word, char count\n\
-search [file] [content] - returns lines with 'content' in them\n\
-cf [file] [content] - creates file with 'content'\n\
-cdir [directory] - creates directory\n\
-rf [file] - removes file\n\
-rdir [directory] - removes directory. asks to confirm if found content inside\n";
+#include <stdlib.h>
+#include "utils.h"
 
 typedef enum {
 	HELP_CMD,
@@ -22,6 +13,7 @@ typedef enum {
 	CDIR_CMD,
 	RF_CMD,
 	RDIR_CMD,
+	CLEAR_CMD,
 	UNKNOWN_CMD
 } Command_Id;
 
@@ -43,6 +35,7 @@ int cmd_cf(int argc, char** argv);
 int cmd_cdir(int argc, char** argv);
 int cmd_rf(int argc, char** argv);
 int cmd_rdir(int argc, char** argv);
+int cmd_clear(int argc, char** argv);
 
 const Command_Id get_command_id(const char** first_word);
 
@@ -56,7 +49,8 @@ static const Command commands[] = {// all existing commands
 	{"cf", CF_CMD, cmd_cf},
 	{"cdir", CDIR_CMD, cmd_cdir},
 	{"rf", RF_CMD, cmd_rf},
-	{"rdir", RDIR_CMD, cmd_rdir}
+	{"rdir", RDIR_CMD, cmd_rdir},
+	{"clear", CLEAR_CMD, cmd_clear}
 };
 
 
