@@ -44,7 +44,7 @@ int cmd_cdir(int argc, char** argv);
 int cmd_rf(int argc, char** argv);
 int cmd_rdir(int argc, char** argv);
 
-const Command_Id get_command_id(const char* str);
+const Command_Id get_command_id(const char** first_word);
 
 
 
@@ -58,3 +58,7 @@ static const Command commands[] = {// all existing commands
 	{"rf", RF_CMD, cmd_rf},
 	{"rdir", RDIR_CMD, cmd_rdir}
 };
+
+
+
+int cmd_general_runner(Command_Id id, int argc, char** argv);

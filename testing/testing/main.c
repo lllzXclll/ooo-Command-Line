@@ -2,10 +2,11 @@
 #include <stdbool.h>
 #include <string.h>
 #include "commands.h"
+#include "utils.h"
 
 
-#define MAX_SIZE 1024
 #define EXIT_CMD "exit"
+#define MAX_ARGS 10
 const char* welcome_msg = "Welcome to OOO Command-Line\nCreated by zXc to prove he is worth something still :)\n";
 
 
@@ -24,9 +25,12 @@ int main() {
 				return 0;
 			}
 			/* just to prove it works
-			int cmd_id = get_command_id(cmd);
+			int cmd_id = get_command_id(sizeof(cmd), cmd);
 			commands[cmd_id].func(0, NULL);
 			*/
+			char* argv[MAX_ARGS];
+			int argc = split_line(cmd, argv, MAX_ARGS);
+			cmd_general_runner(get_command_id(argv[0]), argc, argv);
 		}
 	}
 	return 0;
