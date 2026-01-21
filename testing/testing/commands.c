@@ -80,7 +80,60 @@ int cmd_copy(int argc, char** argv)
 
 int cmd_count(int argc, char** argv)
 {
-    return 0;
+    if (argc != 2) {
+        printf("Wrong usage of the command count!\n\n");
+        return 0;
+    }
+    const char* file_name = argv[1];
+    FILE* file = fopen(file_name, "r");
+    if (file == NULL) {
+        printf("Couldn't open file '%s'\n", file_name);
+        return 0;
+    }
+
+    int char_cnt = 0;
+    char c;
+    while ((c = fgetc(file)) != EOF) {
+        char_cnt++;
+    }
+
+    int word_cnt = 0;
+    int in_word = 0; // 0 - outside a word. 1 - in a word
+
+    rewind(file); // reset the file pointer to the beginning
+    while ((c = fgetc(file)) != EOF) {
+        if (isspace(c)) {
+            in_word = 0;
+        }
+        else {
+            if (!in_word)
+                word_cnt++; // count only if we weren't inside a word before hand
+            in_word = 1;
+        }
+    }
+
+    int line_cnt = 0;
+    int first_counted = 0; // 0 - note counted. 1 - counted
+
+    rewind(file); // reset the file pointer to the beginning
+    while ((c = fgetc(file)) != EOF) {
+        if (c == '\n') {
+            line_cnt++;
+        }
+        else {
+            if (!first_counted) {
+                line_cnt++;
+                first_counted = 1;
+            }
+        }
+    }
+
+    printf("Here is your requested count:\n\n");
+    printf("Lines: %d | Words: %d | Characters: %d\n\n", line_cnt, word_cnt, char_cnt);
+
+    fclose(file);
+
+    return 1;
 }
 
 int cmd_search(int argc, char** argv)
