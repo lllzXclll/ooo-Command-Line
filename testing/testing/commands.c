@@ -190,7 +190,20 @@ int cmd_cdir(int argc, char** argv)
 
 int cmd_rf(int argc, char** argv)
 {
-    return 0;
+    if (argc != 2) {
+        printf("Wrong usage of rf command!\n");
+        return 0;
+    }
+
+    const char* file_name = argv[1];
+
+    if (remove(file_name) == 0) {
+        printf("'%s' file has been taken down SUCCESSFULY! GJ :)\n", file_name);
+        return 1;
+    }
+    printf("Failed to delete '%s' file!\n", file_name);
+
+    return 1;
 }
 
 int cmd_rdir(int argc, char** argv)
