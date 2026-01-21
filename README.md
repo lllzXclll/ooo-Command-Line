@@ -1,32 +1,18 @@
-**C Command-Line - ooo**
+#C Command-Line - ooo
 
+> This is a project meant to practice and show the abilities in handling files in C
 
-example usage:
-ooo> <command> [options] <arguments>
-
-
-commands:
-help - shows all commands or explains a specific command
-
-copy - copy source.txt dest.txt
-	creates dest.txt if doesn't exists
-	overwrites if it does exist
-	
-count - count file.txt
-	counts lines, words and characters in the file
-	
-search - search file.txt "word"
-	returns the lines with the "word" (with the line number)
-
-cf - create file - cf file.txt ["content"]
-	create a file.txt with content optional
-	
-cdir - create directory - cdir folder
-	creates a folder named folder
-	
-rf - remove file - rf file.txt
-	deletes file.txt
-
-rdir - remove directory - rdir folder
-	deletes folder. if not empty ask to confirm the action
-
+## Description
+This tool is a simple command-line created with the programming language C.
+This command-line is supporting the following commands:
+```
+**help**
+**clear**
+**copy**
+**count**
+**search**
+**cf** - create file
+**cdir** - create directory
+**rf** - remove file
+**rdir** - remove directory
+```

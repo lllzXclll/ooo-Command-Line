@@ -24,10 +24,7 @@ int main() {
 				printf("I hople I proven my worth :) bye...");
 				return 0;
 			}
-			/* just to prove it works
-			int cmd_id = get_command_id(sizeof(cmd), cmd);
-			commands[cmd_id].func(0, NULL);
-			*/
+			
 			char* argv[MAX_ARGS];
 			int argc = split_line(cmd, argv, MAX_ARGS);
 			cmd_general_runner(get_command_id(argv[0]), argc, argv);
