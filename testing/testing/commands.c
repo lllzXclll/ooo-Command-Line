@@ -138,7 +138,77 @@ int cmd_count(int argc, char** argv)
 
 int cmd_search(int argc, char** argv)
 {
-    return 0;
+    if (argc < 3) {
+        printf("Wrong usage of search command!\n");
+        return 0;
+    }
+    // save the wanted pattern to search in a dinamic string ---------------------------------
+    size_t pattern_len = total_str_len(argv);
+    
+
+    char* pattern = malloc(pattern_len);
+    if (!pattern) {
+        printf("malloc failed at search command\n");
+        return 0;
+    }
+
+    pattern[0] = '\0'; // make sure it is read as a string so strcat could work
+
+    for (size_t i = 2; i < argc; i++)
+    {
+        strncat(pattern, argv[i], pattern_len);
+        
+        if (i + 1 != argc) {
+            strncat(pattern, " ", pattern_len); // add space between words
+        }
+    }
+
+    if (pattern_len > BUFFER_SIZE) {
+        printf("Pattern is to big! must be below %d bytes\n", BUFFER_SIZE);
+        free(pattern);
+        return 0;
+    }
+    // ---------------------------------------------------------------------------------------
+    //search in file -------------------------------------------------------------------------
+    const char* file_name = argv[1];
+
+    FILE* file = fopen(file_name, "rb");
+    if (!file) {
+        printf("Could not find '%s' file!\n", file_name);
+        return 0;
+    }
+
+
+    Buffer bfr;
+    size_t bytes_read = 0;
+    size_t overlap = 0;
+
+    while ((bytes_read = fread(bfr + overlap, 1, BUFFER_SIZE - overlap, file)) > 0) {
+        bfr[bytes_read] = '\0'; // add null terminator
+         bytes_read += overlap; // add the overlap that we skipped in reading
+         size_t found_len = 0;
+         int* found_lines = find_pattern_line(bfr, pattern, &found_len); // find if patter exists in the current chunk
+         if (found_lines) {
+             for (size_t i = 0; i < found_len; i++)
+             {
+                 printf("Line %d:\n", found_lines[i]);
+             }
+             free(found_lines);
+         }
+
+        // save pattern length - 1 from previouse chunk to make sure we didnt miss the pattern between chunks
+        overlap = pattern_len - 1;
+        if (overlap > bytes_read) {
+            overlap = bytes_read;
+        }
+        memmove(bfr, bfr + bytes_read - overlap, overlap);
+
+    }
+
+    
+    fclose(file);
+    free(pattern);
+    return 1;
 }
 
 int cmd_cf(int argc, char** argv)

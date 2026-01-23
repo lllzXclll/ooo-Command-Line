@@ -1,12 +1,14 @@
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
 
 #define BUFFER_SIZE 8192
 #define MAX_SIZE 1024
 
-typedef char Buffer[BUFFER_SIZE];
+typedef char Buffer[BUFFER_SIZE + 1]; // +1 for null terminato
 
 static const char unknown_cmd_msg[] = "FIX YOUR COMMAND! NO SUCH COMMAND BUDDY '_'\nUse help command if you lost :)\n";
 
@@ -23,4 +25,8 @@ rdir [directory] - removes directory. asks to confirm if found content inside\n"
 
 
 int split_line(char* str, char** argv, int max_args);
+
+int* find_pattern_line(const char* data, const char* pattern, size_t* out_count);
+
+size_t total_str_len(char** str);
 
