@@ -80,3 +80,4 @@ size_t total_str_len(char** str)
 
     return len;
 }
+

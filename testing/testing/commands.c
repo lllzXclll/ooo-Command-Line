@@ -184,17 +184,18 @@ int cmd_search(int argc, char** argv)
     size_t overlap = 0;
 
     while ((bytes_read = fread(bfr + overlap, 1, BUFFER_SIZE - overlap, file)) > 0) {
+
         bfr[bytes_read] = '\0'; // add null terminator
-         bytes_read += overlap; // add the overlap that we skipped in reading
-         size_t found_len = 0;
-         int* found_lines = find_pattern_line(bfr, pattern, &found_len); // find if patter exists in the current chunk
-         if (found_lines) {
-             for (size_t i = 0; i < found_len; i++)
-             {
-                 printf("Line %d:\n", found_lines[i]);
-             }
-             free(found_lines);
-         }
+        bytes_read += overlap; // add the overlap that we skipped in reading
+        size_t found_len = 0;
+        int* found_lines = find_pattern_line(bfr, pattern, &found_len); // find if patter exists in the current chunk
+        if (found_lines) {
+            for (size_t i = 0; i < found_len; i++)
+            {
+                printf("Found At Line %d:\n", found_lines[i]);
+            }
+            free(found_lines);
+        }
 
         // save pattern length - 1 from previouse chunk to make sure we didnt miss the pattern between chunks
         overlap = pattern_len - 1;
